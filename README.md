@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SlowPour
 
-## Getting Started
+### Every cup has a story.
 
-First, run the development server:
+SlowPour is a personal coffee journal for the beans you bring home, the recipes you repeat, and the little changes that make a brew click. Follow each coffee from the first bag to the last sip, then keep what you learn for next time.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![SlowPour's coffee loop: coffee, recipe, brew, reflect](public/assets/slowpour-brew-loop.svg)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## A journal for the whole brew
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Coffee shelf:** keep coffees and open or finished bags together, with their origin and processing details.
+- **Recipe notebook:** save repeatable brew methods and settings, then choose a go-to recipe for each coffee.
+- **Brew journal:** use the timer, log what you brewed, and keep tasting notes alongside the recipe you followed.
+- **Your setup:** track grinders, brewers, scales, and kettles so each brew has useful context.
+- **Insights:** revisit your brew history to spot favorite coffees and methods.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The idea is simple: keep the useful details close, but make recording a cup feel more like journaling than filling out a spreadsheet.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Prototype note
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+SlowPour is a frontend prototype(for now(hopefully)). Demo sign-in and journal data are stored in this browser; there is no backend or account sync yet.

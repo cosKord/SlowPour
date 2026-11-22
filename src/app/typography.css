@@ -1,0 +1,5 @@
+html :is(h1, .coffee-name) {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+}

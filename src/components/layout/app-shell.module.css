@@ -1,0 +1,204 @@
+.shell {
+  font-family: "Inter Variable", sans-serif;
+  min-height: 100svh;
+  background: #eae0ce;
+  color: #2e2025;
+  isolation: isolate;
+  position: relative;
+  padding: 14px;
+  display: flex;
+  gap: 24px;
+}
+.coffeeLandscape::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(250, 247, 242, 0.26), rgba(250, 247, 242, 0.16) 55%, rgba(234, 224, 206, 0.46)),
+    url("/assets/vanishing-hills.svg") center center / cover no-repeat;
+  transition: filter 350ms ease, transform 350ms ease;
+}
+.coffeeDetail::before {
+  filter: blur(12px);
+  transform: scale(1.04);
+}
+.sidebar {
+  width: 224px;
+  flex-shrink: 0;
+  height: calc(100svh - 28px);
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 20;
+  overflow-y: auto;
+  border-radius: 24px;
+  background: #faf7f2;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.sidebar nav {
+  display: grid;
+  gap: 6px;
+}
+.main {
+  flex: 1;
+  margin-left: 248px;
+  min-width: 0;
+  padding: 28px 32px;
+  max-width: calc(100% - 248px);
+}
+.main > div {
+  margin-inline: auto;
+}
+.link {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 24px;
+  font-size: 14px;
+}
+.active {
+  background: #e2e8d8;
+  font-weight: 600;
+}
+.profile {
+  margin-top: auto;
+  border-top: 1px solid #2e202515;
+  padding-top: 20px;
+  font-size: 13px;
+}
+.profile small {
+  display: block;
+  color: #746760;
+  margin-top: 4px;
+}
+.mobileHeader {
+  display: none;
+}
+.glass .sidebar {
+  background: #faf7f28a;
+  backdrop-filter: blur(16px) saturate(138%);
+  border: 1px solid #ffffffa3;
+  box-shadow:
+    0 8px 28px #2e20250f,
+    inset 0 1px #ffffffd6;
+}
+.drawer {
+  margin: 0;
+  height: 100svh;
+  max-height: 100svh;
+  width: min(320px, 90vw);
+  max-width: none;
+  background: #faf7f2;
+  border: 0;
+  padding: 24px;
+  color: inherit;
+}
+.drawer::backdrop {
+  background: #2e202570;
+  backdrop-filter: blur(5px);
+}
+.drawer nav {
+  display: grid;
+  gap: 10px;
+  margin-top: 30px;
+}
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.status {
+  padding: 12px;
+  background: #efe4e9;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.shell button {
+  cursor: pointer;
+}
+.shell a:focus-visible,
+.shell button:focus-visible {
+  outline: 3px solid #a8552f;
+  outline-offset: 4px;
+}
+@media (max-width: 1023px) {
+  .shell {
+    display: block;
+    padding: 0;
+  }
+  .sidebar {
+    display: none;
+  }
+  .main {
+    margin-left: 0;
+    max-width: none;
+    padding: 24px 20px;
+  }
+  .mobileHeader {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #faf7f2e8;
+    backdrop-filter: blur(14px);
+    gap: 12px;
+  }
+  .mobileHeader > button {
+    padding: 8px;
+  }
+  .mobileHeader a:last-child {
+    font-size: 12px;
+    min-height: 40px;
+    padding: 10px 14px;
+  }
+}
+.drawer[open] {
+  animation: drawer-enter 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes drawer-enter {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .drawer[open] {
+    animation: none;
+  }
+}
+.navPill {
+  position: absolute;
+  inset: 0;
+  background: #e2e8d8;
+  border-radius: inherit;
+  z-index: -1;
+}
+.link {
+  isolation: isolate;
+}
+.active {
+  background: transparent;
+}
+.mobileDisclosure {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .mobileDisclosure {
+    display: block;
+    font-size: 11px;
+    color: #746760;
+    margin-bottom: 18px;
+  }
+}

@@ -1,0 +1,50 @@
+.card.card {
+  transition:
+    transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 320ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 320ms ease,
+    background-color 320ms ease;
+}
+
+.art.art {
+  transition: background-color 320ms ease;
+}
+
+.bagArt {
+  transform-origin: center;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(62, 34, 49, 0.16);
+    background-color: rgba(250, 247, 242, 0.86);
+    box-shadow: 0 20px 44px rgba(46, 32, 37, 0.16);
+  }
+
+  .card.card:hover .art {
+    background-color: rgba(234, 224, 203, 0.72);
+  }
+
+  .card.card:hover .bagArt {
+    transform: translateY(-3px) scale(1.015);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card.card,
+  .art.art,
+  .bagArt {
+    transition: none;
+  }
+
+  .card.card:hover {
+    transform: none;
+    box-shadow: var(--shadow-1);
+  }
+
+  .card.card:hover .bagArt {
+    transform: none;
+  }
+}

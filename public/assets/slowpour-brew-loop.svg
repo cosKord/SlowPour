@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" role="img" aria-labelledby="title desc">
+  <title id="title">The SlowPour coffee loop</title>
+  <desc id="desc">Four steps: choose a coffee, save a recipe, log a brew, and reflect on the taste.</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbf7ef"/>
+      <stop offset="1" stop-color="#eee2cf"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 8 4 0 8" fill="none" stroke="#c67249" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="1198" height="338" rx="28" fill="url(#paper)" stroke="#ded1be"/>
+  <text x="42" y="48" fill="#a8552f" font-family="Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="3">THE SLOWPOUR LOOP</text>
+  <text x="42" y="78" fill="#382838" font-family="Georgia,serif" font-size="25" font-weight="700">A better cup, one note at a time.</text>
+
+  <g fill="#fffdf8" stroke="#ded1be">
+    <rect x="35" y="104" width="246" height="190" rx="20"/>
+    <rect x="329" y="104" width="246" height="190" rx="20"/>
+    <rect x="623" y="104" width="246" height="190" rx="20"/>
+    <rect x="917" y="104" width="246" height="190" rx="20"/>
+  </g>
+  <g fill="none" stroke="#c67249" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+    <path d="M286 199h32" marker-end="url(#arrow)"/>
+    <path d="M580 199h32" marker-end="url(#arrow)"/>
+    <path d="M874 199h32" marker-end="url(#arrow)"/>
+  </g>
+
+  <g>
+    <circle cx="80" cy="151" r="25" fill="#f2e9da"/>
+    <path d="M80 132c-13 9-17 22-8 34 13-9 17-22 8-34Z" fill="none" stroke="#5b3426" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path d="M73 162c7-10 11-18 12-26" fill="none" stroke="#5b3426" stroke-linecap="round" stroke-width="2"/>
+    <text x="62" y="226" fill="#a8552f" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2">01 · PICK</text>
+    <text x="62" y="253" fill="#382838" font-family="Georgia,serif" font-size="22" font-weight="700">Coffee</text>
+    <text x="62" y="276" fill="#6b5c52" font-family="Arial,sans-serif" font-size="13">Origin, process, and bag.</text>
+  </g>
+
+  <g>
+    <circle cx="374" cy="151" r="25" fill="#f2e9da"/>
+    <path d="m361 139 13 24 13-24M365 146h17m-14 6h11" fill="none" stroke="#5b3426" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path d="M374 130v6m-9-3 2 4m16-4-2 4" fill="none" stroke="#c67249" stroke-linecap="round" stroke-width="2"/>
+    <text x="356" y="226" fill="#a8552f" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2">02 · SAVE</text>
+    <text x="356" y="253" fill="#382838" font-family="Georgia,serif" font-size="22" font-weight="700">Recipe</text>
+    <text x="356" y="276" fill="#6b5c52" font-family="Arial,sans-serif" font-size="13">Dose, method, and timing.</text>
+  </g>
+
+  <g>
+    <circle cx="668" cy="151" r="25" fill="#f2e9da"/>
+    <path d="M654 144h22l-2 17h-18l-2-17Zm22 4h5a6 6 0 0 1 0 12h-6m-14-21c-3-3 3-4 0-7m8 7c-3-3 3-4 0-7" fill="none" stroke="#5b3426" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <text x="650" y="226" fill="#a8552f" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2">03 · LOG</text>
+    <text x="650" y="253" fill="#382838" font-family="Georgia,serif" font-size="22" font-weight="700">Brew</text>
+    <text x="650" y="276" fill="#6b5c52" font-family="Arial,sans-serif" font-size="13">What happened in the cup.</text>
+  </g>
+
+  <g>
+    <circle cx="962" cy="151" r="25" fill="#f2e9da"/>
+    <path d="M962 133 978 142v18l-16 9-16-9v-18l16-9Z" fill="none" stroke="#5b3426" stroke-linejoin="round" stroke-width="1.7"/>
+    <path d="m946 142 16 9 16-9m-16 9v18m-16-27 16 9 16-9" fill="none" stroke="#c67249" stroke-linejoin="round" stroke-width="1.5"/>
+    <text x="944" y="226" fill="#a8552f" font-family="Arial,sans-serif" font-size="11" font-weight="700" letter-spacing="2">04 · NOTICE</text>
+    <text x="944" y="253" fill="#382838" font-family="Georgia,serif" font-size="22" font-weight="700">Reflect</text>
+    <text x="944" y="276" fill="#6b5c52" font-family="Arial,sans-serif" font-size="13">Find the next small tweak.</text>
+  </g>
+</svg>

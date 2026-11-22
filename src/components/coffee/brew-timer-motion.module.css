@@ -1,0 +1,17 @@
+.backdrop { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.pool { position: absolute; inset: 0; background: rgba(86, 51, 39, .1); will-change: transform; }
+.ripple { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: rgba(62, 34, 49, .2); }
+.wave { position: absolute; top: -28px; left: 0; width: 200%; height: 30px; fill: rgba(86, 51, 39, .1); will-change: transform; }
+.waveFirst { animation: wave 5.5s linear infinite; }
+.waveSecond { opacity: .65; animation: wave 8.5s linear infinite reverse; }
+.pourGuide { position: absolute; top: 0; left: 50%; width: 1px; height: 28px; background: rgba(62, 34, 49, .2); }
+.drop { position: absolute; top: -10%; width: 18px; height: 25px; border-radius: 65% 65% 65% 65% / 80% 80% 35% 35%; background: rgba(86, 51, 39, .34); animation: drip 3s linear infinite; will-change: transform, opacity; }
+.immersion { position: absolute; inset: 0; background: rgba(86, 51, 39, .1); will-change: transform; }
+.plungerLayer { position: absolute; inset: 0; will-change: transform; }
+.plunger { position: absolute; top: 18%; left: 6%; width: 88%; height: 10px; border-radius: 999px; background: rgba(62, 34, 49, .24); }
+.mesh { position: absolute; top: 14%; left: 6%; width: 88%; border-top: 2px dashed rgba(62, 34, 49, .24); }
+.ground { position: absolute; top: 21%; width: 6px; height: 6px; border-radius: 50%; background: rgba(62, 34, 49, .16); animation: float 4s ease-in-out infinite; }
+.paused .drop, .paused .wave, .paused .ground { animation-play-state: paused; }
+@keyframes drip { 0% { transform: translate3d(0, 0, 0); opacity: 0; } 10%, 85% { opacity: 1; } 100% { transform: translate3d(0, 950px, 0); opacity: 0; } }
+@keyframes wave { to { transform: translate3d(-50%, 0, 0); } }
+@keyframes float { 50% { transform: translate3d(0, 8px, 0); } }
