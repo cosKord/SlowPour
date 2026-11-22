@@ -22,11 +22,11 @@ export default function AboutPage() {
               intended and the cup you actually brewed.
             </p>
             <p>
-              This frontend prototype stores its demo data locally in your
-              browser. It is designed to show how the complete experience can
-              work before a production backend exists.
+              Sign in to keep your coffee, recipes, and brew notes together
+              across sessions. You can also bring in a journal from the earlier
+              browser demo.
             </p>
-            <ButtonLink href="/login">Enter the demo</ButtonLink>
+            <ButtonLink href="/login">Start your journal</ButtonLink>
           </div>
         </div>
       </section>

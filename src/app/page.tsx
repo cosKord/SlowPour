@@ -58,7 +58,7 @@ export default function Home() {
 
     <section className={styles.process} aria-labelledby="process-title"><div className={styles.processInner}><h2 id="process-title">From shelf to next cup.</h2><div className={styles.processSteps}>{[["Choose a coffee","Open the bag you’re brewing and start from a recipe you trust."],["Log what changed","Capture the real dose, water, time, grind, and how the cup tasted."],["Return with a plan","See the full story and carry one useful adjustment into tomorrow."]].map(([title,copy])=><article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
 
-    <section className={styles.closing} aria-labelledby="closing-title"><div className={styles.closingInner}><p>One cup at a time.</p><h2 id="closing-title">Make tomorrow’s cup <span className="editorial">worth remembering.</span></h2><ButtonLink href="/login" className="button--inverted">Start your coffee journal <ArrowRight size={16}/></ButtonLink><footer><span>SlowPour</span><span>Local-first demo · Your notes stay in this browser</span></footer></div></section>
+    <section className={styles.closing} aria-labelledby="closing-title"><div className={styles.closingInner}><p>One cup at a time.</p><h2 id="closing-title">Make tomorrow’s cup <span className="editorial">worth remembering.</span></h2><ButtonLink href="/login" className="button--inverted">Start your coffee journal <ArrowRight size={16}/></ButtonLink><footer><span>SlowPour</span><span>Your notes stay close</span></footer></div></section>
   </main>;
 }
 

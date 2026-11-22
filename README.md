@@ -17,6 +17,12 @@ SlowPour is a personal coffee journal for the beans you bring home, the recipes 
 The idea is simple: keep the useful details close, but make recording a cup feel more like journaling than filling out a spreadsheet.
 
 
-## Prototype note
+## Your journal, kept between cups
 
-SlowPour is a frontend prototype(for now(hopefully)). Demo sign-in and journal data are stored in this browser; there is no backend or account sync yet.
+Accounts and journal data are stored in Postgres. A new account starts with example coffees and brews to explore. If you used the earlier browser demo, Settings has an explicit import button; the browser copy remains untouched.
+
+## Run your own
+
+Install dependencies with `npm install`, put a Postgres connection URI in `DATABASE_URL` (see `.env.example`), run `npm run db:migrate`, then `npm run dev`. On Vercel, set `DATABASE_URL` for production and preview before deploying.
+
+The Next.js route handlers provide account registration, sign in, sessions, and account-scoped journal reads and writes. The current UI saves a journal snapshot as one document; the migration also defines domain tables for a future move to granular record endpoints.

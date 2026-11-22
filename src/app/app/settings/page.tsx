@@ -2,18 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useDashboard } from "@/components/dashboard-store";
 import s from "@/components/dashboard.module.css";
 
 export default function SettingsPage() {
   const store = useDashboard();
+  const router = useRouter();
   const [confirm, setConfirm] = useState(false);
+  const [importMessage, setImportMessage] = useState("");
   return (
     <div className={`${s.dashboard} ${s.settingsDashboard}`}>
       <header className={s.header}>
         <div>
           <h1>Settings</h1>
-          <p>Your preferences save automatically in this browser.</p>
+          <p>Your preferences save to your account.</p>
         </div>
       </header>
       <section className={s.card}>
@@ -45,8 +48,7 @@ export default function SettingsPage() {
             />
           </label>
           <p>
-            Demo entries and preferences stay in this browser. They are not
-            synced between devices.
+            Your journal is saved to your account and available when you sign in again.
           </p>
           {confirm ? (
             <div>
@@ -75,7 +77,19 @@ export default function SettingsPage() {
               Reset seeded demo
             </button>
           )}
-          <Link href="/">Leave demo →</Link>
+          <button className="button button--secondary" disabled={!store.ready || Boolean(store.storageError)} onClick={() => {
+            try {
+              const raw = localStorage.getItem("slowpour-dashboard-v2");
+              if (!raw) { setImportMessage("No earlier browser journal was found."); return; }
+              const saved = JSON.parse(raw);
+              if (!Array.isArray(saved.coffees) || !Array.isArray(saved.bags) || !Array.isArray(saved.brews) || !Array.isArray(saved.recipes)) throw new Error();
+              store.update(saved);
+              setImportMessage("Browser journal imported. Your earlier browser copy is still available.");
+            } catch { setImportMessage("The earlier browser journal could not be read."); }
+          }}>Import earlier browser journal</button>
+          {importMessage && <p role="status">{importMessage}</p>}
+          <button className="button button--quiet" onClick={async () => { await fetch("/api/auth", { method: "DELETE" }); router.push("/login"); router.refresh(); }}>Sign out</button>
+          <Link href="/">Back to the story →</Link>
         </div>
       </section>
     </div>

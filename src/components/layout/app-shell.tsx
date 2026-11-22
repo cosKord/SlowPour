@@ -70,7 +70,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </LayoutGroup>
           <div className={s.profile}>
             <strong>user</strong>
-            <small>Local demo · saved in this browser</small>
+            <small>Your coffee journal</small>
           </div>
         </aside>
         <header className={s.mobileHeader}>
@@ -108,7 +108,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </dialog>
         <main className={s.main}>
           <p className={s.mobileDisclosure}>
-            Local demo · saved in this browser
+            Your coffee journal
           </p>
           {store.storageError && (
             <p role="status" className={s.status}>

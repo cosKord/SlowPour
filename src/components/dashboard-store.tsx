@@ -56,7 +56,6 @@ const initial: State = {
   grindOverrides: {},
   goToRecipeIds: {},
 };
-const key = "slowpour-dashboard-v2";
 type Store = State & {
   ready: boolean;
   storageError: string;
@@ -73,14 +72,18 @@ const Context = createContext<Store | null>(null);
 export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState(initial);
   const [ready, setReady] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [storageError, setStorageError] = useState("");
   useEffect(() => {
     let cancelled = false;
-    // Load browser-only storage after hydration; cancel delivery on unmount.
-    Promise.resolve().then(() => {
+    // The old local snapshot is retained for an explicit import in Settings.
+    Promise.resolve().then(async () => {
       if (cancelled) return;
       try {
-        const saved = localStorage.getItem(key);
+        const response = await fetch("/api/journal", { cache: "no-store" });
+        if (!response.ok) throw new Error("Journal request failed");
+        const remote = await response.json();
+        const saved = remote.document ? JSON.stringify(remote.document) : null;
         if (saved) {
           const parsed = JSON.parse(saved);
           if (
@@ -105,9 +108,10 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             });
           }
         }
+        setLoaded(true);
       } catch {
         setStorageError(
-          "Saved data could not be loaded. This session uses demo data.",
+          "Your journal could not be loaded. Changes will not be saved until the connection returns.",
         );
       }
       setReady(true);
@@ -117,17 +121,21 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
   useEffect(() => {
-    if (!ready) return;
-    try {
-      localStorage.setItem(key, JSON.stringify(state));
-    } catch {
-      queueMicrotask(() =>
-        setStorageError(
-          "Browser storage is unavailable. Changes last for this session only.",
-        ),
-      );
-    }
-  }, [state, ready]);
+    if (!ready || !loaded) return;
+    const timer = window.setTimeout(async () => {
+      try {
+        const response = await fetch("/api/journal", {
+          method: "PUT", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ document: state }),
+        });
+        if (!response.ok) throw new Error("Save failed");
+        setStorageError("");
+      } catch {
+        setStorageError("Changes could not be saved. Please check your connection.");
+      }
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [state, ready, loaded]);
   const recipeFor = (coffeeId: string) => {
     const chosen = state.recipes.find((recipe) => recipe.id === state.goToRecipeIds?.[coffeeId] && (!recipe.coffeeId || recipe.coffeeId === coffeeId));
     if (chosen) return chosen;
