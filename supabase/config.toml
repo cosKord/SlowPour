@@ -1,0 +1,5 @@
+# Local Supabase CLI project. Production API/Auth settings stay in the dashboard.
+project_id = "slowpour"
+
+[db.migrations]
+enabled = true

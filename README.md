@@ -23,6 +23,6 @@ Accounts and journal data are stored in Postgres. A new account starts with exam
 
 ## Run your own
 
-Install dependencies with `npm install`, put a Postgres connection URI in `DATABASE_URL` (see `.env.example`), run `npm run db:migrate`, then `npm run dev`. On Vercel, set `DATABASE_URL` for production and preview before deploying.
+Install dependencies with `npm install`, put a Postgres connection URI in `DATABASE_URL` (see `.env.example`), then run `npm run dev`. Database changes live in `supabase/migrations/`. To apply new migrations manually, link the Supabase CLI to your project and run `npm run db:migrate`. Once Supabase's GitHub integration is enabled with working directory `.`, it applies new migrations from `main` automatically. On Vercel, set `DATABASE_URL` for production and preview.
 
 The Next.js route handlers provide account registration, sign in, sessions, and account-scoped journal reads and writes. The current UI saves a journal snapshot as one document; the migration also defines domain tables for a future move to granular record endpoints.
