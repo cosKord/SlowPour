@@ -1,22 +1,10 @@
 import "server-only";
-import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { db } from "./db";
 
 const cookieName = "slowpour_session";
 const duration = 60 * 60 * 24 * 30;
-
-export function hashPassword(password: string) {
-  const salt = randomBytes(16).toString("hex");
-  return `${salt}:${scryptSync(password, salt, 64).toString("hex")}`;
-}
-
-export function verifyPassword(password: string, stored: string) {
-  const [salt, expected] = stored.split(":");
-  if (!salt || !expected || expected.length !== 128) return false;
-  const actual = scryptSync(password, salt, 64);
-  return timingSafeEqual(actual, Buffer.from(expected, "hex"));
-}
 
 const digest = (token: string) => createHash("sha256").update(token).digest("hex");
 
@@ -35,7 +23,9 @@ export async function createSession(userId: string) {
 export async function userIdFromSession() {
   const token = (await cookies()).get(cookieName)?.value;
   if (!token) return null;
-  const rows = await db()`SELECT user_id FROM sessions WHERE token_hash = ${digest(token)} AND expires_at > now()`;
+  const rows = await db()`SELECT sessions.user_id FROM sessions
+    JOIN users ON users.id = sessions.user_id
+    WHERE token_hash = ${digest(token)} AND expires_at > now() AND users.google_sub IS NOT NULL`;
   return (rows[0]?.user_id as string | undefined) ?? null;
 }
 
