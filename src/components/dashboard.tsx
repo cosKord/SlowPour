@@ -17,7 +17,7 @@ export function Dashboard() {
   if (!store.bags.some((bag) => bag.status === "in_rotation")) {
     return (
       <div className={s.dashboard} data-surface="glass">
-        <header className={s.header}><div><p>Your shelf</p><h1>Ready for a new bag?</h1><p>All your open bags are finished. Your brew history is saved.</p></div></header>
+        <header className={s.header}><div><p>Your shelf</p><h1>Ready for a new bag?</h1><p>Open your first bag to begin your coffee journal.</p></div></header>
         <div className="panel"><h2>No bags in rotation</h2><p className="mt-3 text-sm text-muted">Open a new bag to see it here and start logging brews.</p><Link className="button button--primary mt-5" href="/app/coffees/new">Open a new bag</Link></div>
       </div>
     );
@@ -306,7 +306,7 @@ function ActiveDashboard() {
           <strong className={s.number}>{weekly.length}</strong>
           <div
             className={s.spark}
-            aria-label="Daily brew counts over the seven-day demo period"
+            aria-label="Daily brew counts over the last seven days"
           >
             {days.map((count, index) => (
               <div

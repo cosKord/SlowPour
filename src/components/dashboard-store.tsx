@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { bags, brews, coffees, recipes } from "@/data/seed";
 import type { Bag, Brew, Coffee, Recipe } from "@/types";
 
 export type JournalBrew = Brew & {
@@ -29,30 +28,18 @@ type State = {
   grindOverrides: Record<string, number>;
   goToRecipeIds: Record<string, string>;
 };
-export const journalRecipes: JournalRecipe[] = recipes.map((recipe, index) => ({
-  ...recipe,
-  grindClicks: [24, 20, 12, 28, 8][index],
-  targetTimeSec: [165, 120, 240, 240, 30][index],
-}));
+export const journalRecipes: JournalRecipe[] = [
+  { id: "default-v60", name: "V60 starting point", method: "v60", doseG: 15, waterMl: 250, temperatureC: 94, grind: "Medium-fine", favourite: false, grindClicks: 24, targetTimeSec: 165 },
+  { id: "default-aeropress", name: "AeroPress starting point", method: "aeropress", doseG: 17, waterMl: 230, temperatureC: 88, grind: "Medium", favourite: false, grindClicks: 20, targetTimeSec: 120 },
+  { id: "default-moka", name: "Moka starting point", method: "moka_pot", doseG: 18, waterMl: 150, temperatureC: 96, grind: "Fine", favourite: false, grindClicks: 12, targetTimeSec: 240 },
+  { id: "default-french-press", name: "French press starting point", method: "french_press", doseG: 20, waterMl: 320, temperatureC: 93, grind: "Coarse", favourite: false, grindClicks: 28, targetTimeSec: 240 },
+  { id: "default-espresso", name: "Espresso starting point", method: "espresso", doseG: 18, waterMl: 36, temperatureC: 93, grind: "Fine", favourite: false, grindClicks: 8, targetTimeSec: 30 },
+];
 const initial: State = {
-  coffees,
-  bags,
-  recipes: journalRecipes,
-  grinderIds: ["comandante-c40-walnut"],
-  equipmentIds: ["hario-v60", "timemore-black-mirror", "fellow-stagg-ekg"],
-  brews: brews.map((brew) => {
-    const recipe = journalRecipes.find((item) => item.id === brew.recipeId) ?? journalRecipes[0];
-    return {
-      ...brew,
-      temperatureC: recipe.temperatureC,
-      grindClicks: recipe.grindClicks,
-      timeSec: recipe.targetTimeSec,
-      dialInCue: brew.id === "brew-2" ? "Try one click finer next time (20 → 19 clicks)." : undefined,
-    };
-  }),
+  coffees: [], bags: [], recipes: [], grinderIds: [], equipmentIds: [], brews: [],
   tempUnit: "C",
   defaultDose: 15,
-  selectedCoffeeId: "blue-tokai-amaltas",
+  selectedCoffeeId: "",
   grindOverrides: {},
   goToRecipeIds: {},
 };
@@ -64,7 +51,6 @@ type Store = State & {
   openBag: (coffee: Coffee, grams: number, roastedAt: string) => void;
   finishBag: (bagId: string) => void;
   saveRecipe: (recipe: JournalRecipe) => void;
-  reset: () => void;
   recipeFor: (coffeeId: string) => JournalRecipe;
 };
 const Context = createContext<Store | null>(null);
@@ -88,11 +74,10 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
           const parsed = JSON.parse(saved);
           if (
             Array.isArray(parsed.coffees) &&
-            parsed.coffees.length &&
             Array.isArray(parsed.bags) &&
-            Array.isArray(parsed.brews)
+            Array.isArray(parsed.brews) &&
+            Array.isArray(parsed.recipes)
           ) {
-            const savedRecipes = Array.isArray(parsed.recipes) ? parsed.recipes as JournalRecipe[] : [];
             setState({
               ...initial,
               ...parsed,
@@ -101,10 +86,6 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
                   ? { ...bag, remainingWeightG: 0, status: "finished" as const }
                   : bag,
               ),
-              recipes: [
-                ...journalRecipes.filter((recipe) => !savedRecipes.some((saved) => saved.id === recipe.id)),
-                ...savedRecipes,
-              ],
             });
           }
         }
@@ -165,7 +146,6 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
               : [...current.recipes, recipe],
           })),
         update: (patch) => setState((current) => ({ ...current, ...patch })),
-        reset: () => setState(initial),
         finishBag: (bagId) => setState((current) => ({
           ...current,
           bags: current.bags.map((bag) => bag.id === bagId

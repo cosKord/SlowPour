@@ -19,7 +19,7 @@ The idea is simple: keep the useful details close, but make recording a cup feel
 
 ## Your journal, kept between cups
 
-Accounts and journal data are stored in Postgres. A new account starts with example coffees and brews to explore. If you used the earlier browser demo, Settings has an explicit import button; the browser copy remains untouched.
+Accounts and journal data are stored in Postgres. New accounts start with an empty journal. Existing account data remains intact. If you used the earlier browser demo, Settings has an explicit import button; the browser copy remains untouched.
 
 ## Run your own
 

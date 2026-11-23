@@ -6,8 +6,7 @@ import { duration, useDashboard } from "@/components/dashboard-store";
 import JournalSpreadCarousel, {
   type JournalSpread,
 } from "@/components/ui/journal-spread-carousel";
-import { ratio } from "@/data/seed";
-import { formatMethod } from "@/lib/utils";
+import { formatMethod, ratio } from "@/lib/utils";
 
 export default function BrewsPage() {
   const router = useRouter();

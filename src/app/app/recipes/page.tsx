@@ -4,7 +4,7 @@ import { useState } from "react";
 import JournalSpreadCarousel, {
   type JournalSpread,
 } from "@/components/ui/journal-spread-carousel";
-import { ratio } from "@/data/seed";
+import { ratio } from "@/lib/utils";
 import { duration, useDashboard } from "@/components/dashboard-store";
 import { Modal } from "@/components/dashboard-dialogs";
 import { RecipeForm } from "@/components/coffee/recipe-form";
@@ -81,7 +81,7 @@ export default function RecipesPage() {
           setCurrentIndex(Math.max(0, Math.min(index, store.recipes.length - 2)));
           store.update({ recipes: store.recipes.filter((item) => item.id !== recipe.id) });
         }}
-      /> : <div className="mx-auto max-w-[1360px] rounded-3xl bg-[#faf7f2a8] p-10 text-center"><h2 className="text-2xl font-semibold">Your recipe notebook is empty</h2><p className="mt-3 text-muted">Recipes you save will appear here. You can restore the demo recipes from Settings.</p><button type="button" className="button button--primary mt-5" onClick={() => setIsAdding(true)}>+ Add recipe</button></div>}
+      /> : <div className="mx-auto max-w-[1360px] rounded-3xl bg-[#faf7f2a8] p-10 text-center"><h2 className="text-2xl font-semibold">Your recipe notebook is empty</h2><p className="mt-3 text-muted">Recipes you save will appear here.</p><button type="button" className="button button--primary mt-5" onClick={() => setIsAdding(true)}>+ Add recipe</button></div>}
       {isAdding && <Modal title="Add a recipe" onClose={() => setIsAdding(false)}><RecipeForm onSaved={() => setIsAdding(false)} /></Modal>}
     </>
   );

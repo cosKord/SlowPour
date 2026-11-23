@@ -1,7 +1,6 @@
 import type { Coffee } from "@/types";
 
-// Fictional display-only bags for the public landing page. Keep these out of
-// the seeded journal inventory in seed.ts.
+// Fictional display-only bags for the public landing page. Never add these to a user's journal.
 export const landingCoffees: Coffee[] = [
   {
     id: "sample-attikan",

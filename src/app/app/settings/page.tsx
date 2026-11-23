@@ -9,7 +9,6 @@ import s from "@/components/dashboard.module.css";
 export default function SettingsPage() {
   const store = useDashboard();
   const router = useRouter();
-  const [confirm, setConfirm] = useState(false);
   const [importMessage, setImportMessage] = useState("");
   return (
     <div className={`${s.dashboard} ${s.settingsDashboard}`}>
@@ -50,33 +49,6 @@ export default function SettingsPage() {
           <p>
             Your journal is saved to your account and available when you sign in again.
           </p>
-          {confirm ? (
-            <div>
-              <p>Replace your saved brews and bags with the original demo?</p>
-              <button
-                className="button button--primary"
-                onClick={() => {
-                  store.reset();
-                  setConfirm(false);
-                }}
-              >
-                Reset demo data
-              </button>
-              <button
-                className="button button--quiet"
-                onClick={() => setConfirm(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          ) : (
-            <button
-              className="button button--secondary"
-              onClick={() => setConfirm(true)}
-            >
-              Reset seeded demo
-            </button>
-          )}
           <button className="button button--secondary" disabled={!store.ready || Boolean(store.storageError)} onClick={() => {
             try {
               const raw = localStorage.getItem("slowpour-dashboard-v2");

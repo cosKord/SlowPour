@@ -30,7 +30,7 @@ export default function Home() {
       <LandingAccents variant="collection" />
       <div className={styles.collectionIntro}>
         <div><h2 id="collection-title">A shelf that remembers more than the label.</h2><p>Every bag keeps its origin, roast, open date, recipes, and the cups you brewed from it—so good coffee never becomes a vague memory.</p></div>
-        <ButtonLink href="/login" variant="secondary">Enter demo to explore <ArrowRight size={16}/></ButtonLink>
+        <ButtonLink href="/login" variant="secondary">Start your journal <ArrowRight size={16}/></ButtonLink>
       </div>
       <div className={styles.catalogue} aria-label="Four illustrative sample coffees shown on this landing page">
         {landingCoffees.map((coffee,index) => <article className={styles.catalogueItem} key={coffee.id}>

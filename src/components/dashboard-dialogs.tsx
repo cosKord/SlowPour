@@ -491,7 +491,9 @@ export function LogBrew({
             value={recipeId}
             onChange={(event) => setRecipeId(event.target.value)}
           >
-            {store.recipes.filter((item) => !item.coffeeId || item.coffeeId === selected).map((item) => (
+            {(store.recipes.filter((item) => !item.coffeeId || item.coffeeId === selected).length
+              ? store.recipes.filter((item) => !item.coffeeId || item.coffeeId === selected)
+              : journalRecipes).map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
