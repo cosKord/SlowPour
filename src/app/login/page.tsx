@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./login.module.css";
 
 export const instant = false;
@@ -12,7 +13,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <Image className={styles.photo} src="/assets/login-coffee-poster.webp" alt="Vintage-style photograph of a coffee cup on a warm wooden table" fill priority sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 55vw" />
         <div className={styles.photoShade} aria-hidden="true" />
         <div className={styles.editorialContent}>
-          <p className={styles.wordmark}>SlowPour</p>
+          <Link className={styles.wordmark} href="/" aria-label="SlowPour home">SlowPour</Link>
           <div className={styles.story}>
             <h2 aria-label="Coffee. Coffee. Coffee."><span>Coffee.</span><span>Coffee.</span><span>Coffee.</span><span>Coffee.</span><span>Coffee.</span></h2>
             <p>A quiet place for every cup, every recipe, every discovery.</p>
