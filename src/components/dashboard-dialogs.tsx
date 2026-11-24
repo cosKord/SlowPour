@@ -608,15 +608,21 @@ export function OpenBag({
   const store = useDashboard();
   const [roaster, setRoaster] = useState("");
   const [coffeeName, setCoffeeName] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
   return (
     <Modal title="Open a new bag" onClose={onClose}>
       <form
         className={s.form}
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
+          if (saving) return;
+          setSaving(true);
+          setSaveError("");
           const data = new FormData(event.currentTarget);
           const value = (key: string) => String(data.get(key)).trim();
-          store.openBag(
+          try {
+            await store.openBag(
             {
               id: crypto.randomUUID(),
               name:
@@ -641,8 +647,13 @@ export function OpenBag({
             },
             Number(value("grams")),
             value("date"),
-          );
-          onSaved();
+            );
+            onSaved();
+          } catch {
+            setSaveError("This bag could not be saved. Please try again.");
+          } finally {
+            setSaving(false);
+          }
         }}
       >
         <GlassSelect
@@ -723,8 +734,9 @@ export function OpenBag({
             placeholder="Juicy red fruit with a tea-like finish and a cocoa undertone."
           />
         </label>
-        <button className="button button--primary" type="submit">
-          Open bag
+        {saveError && <p role="alert">{saveError}</p>}
+        <button className="button button--primary" type="submit" disabled={saving}>
+          {saving ? "Saving bag…" : "Open bag"}
         </button>
       </form>
     </Modal>

@@ -5,7 +5,9 @@ export async function GET() {
   const userId = await userIdFromSession();
   if (!userId) return Response.json({ error: "Sign in required." }, { status: 401 });
   const rows = await db()`SELECT document, revision FROM journal_snapshots WHERE user_id = ${userId}`;
-  return Response.json(rows[0] ?? { document: null, revision: 0 }, { headers: { "Cache-Control": "no-store" } });
+  const row = rows[0];
+  const document = typeof row?.document === "string" ? JSON.parse(row.document) : row?.document ?? null;
+  return Response.json({ document, revision: row?.revision ?? 0 }, { headers: { "Cache-Control": "no-store" } });
 }
 
 export async function PUT(request: Request) {
@@ -18,8 +20,9 @@ export async function PUT(request: Request) {
     JSON.stringify(document).length > 2_000_000) {
     return Response.json({ error: "Invalid journal data." }, { status: 400 });
   }
-  const rows = await db()`INSERT INTO journal_snapshots (user_id, document)
-    VALUES (${userId}, ${JSON.stringify(document)}::jsonb)
+  const sql = db();
+  const rows = await sql`INSERT INTO journal_snapshots (user_id, document)
+    VALUES (${userId}, ${sql.json(document)})
     ON CONFLICT (user_id) DO UPDATE SET document = EXCLUDED.document,
       revision = journal_snapshots.revision + 1, updated_at = now()
     RETURNING revision`;

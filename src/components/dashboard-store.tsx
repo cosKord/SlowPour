@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import type { Bag, Brew, Coffee, Recipe } from "@/types";
 
 export type JournalBrew = Brew & {
@@ -48,7 +48,7 @@ type Store = State & {
   storageError: string;
   update: (patch: Partial<State>) => void;
   logBrew: (brew: Omit<JournalBrew, "id" | "brewedAt">) => void;
-  openBag: (coffee: Coffee, grams: number, roastedAt: string) => void;
+  openBag: (coffee: Coffee, grams: number, roastedAt: string) => Promise<void>;
   finishBag: (bagId: string) => void;
   saveRecipe: (recipe: JournalRecipe) => void;
   recipeFor: (coffeeId: string) => JournalRecipe;
@@ -60,9 +60,9 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [storageError, setStorageError] = useState("");
+  const loadedState = useRef<State | null>(null);
   useEffect(() => {
     let cancelled = false;
-    // The old local snapshot is retained for an explicit import in Settings.
     Promise.resolve().then(async () => {
       if (cancelled) return;
       try {
@@ -78,7 +78,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             Array.isArray(parsed.brews) &&
             Array.isArray(parsed.recipes)
           ) {
-            setState({
+            const next: State = {
               ...initial,
               ...parsed,
               bags: (parsed.bags as Bag[]).map((bag) =>
@@ -86,9 +86,14 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
                   ? { ...bag, remainingWeightG: 0, status: "finished" as const }
                   : bag,
               ),
-            });
+            };
+            loadedState.current = next;
+            setState(next);
+          } else {
+            throw new Error("Invalid saved journal");
           }
         }
+        if (!saved) loadedState.current = initial;
         setLoaded(true);
       } catch {
         setStorageError(
@@ -103,6 +108,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   }, []);
   useEffect(() => {
     if (!ready || !loaded) return;
+    if (state === loadedState.current) return;
     const timer = window.setTimeout(async () => {
       try {
         const response = await fetch("/api/journal", {
@@ -178,23 +184,24 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             ),
           };
           }),
-        openBag: (coffee, grams, roastedAt) =>
-          setState((current) => ({
-            ...current,
-            coffees: [...current.coffees, coffee],
+        openBag: async (coffee, grams, roastedAt) => {
+          const next: State = {
+            ...state,
+            coffees: [...state.coffees, coffee],
             selectedCoffeeId: coffee.id,
-            bags: [
-              ...current.bags,
-              {
-                id: crypto.randomUUID(),
-                coffeeId: coffee.id,
-                startingWeightG: grams,
-                remainingWeightG: grams,
-                roastedAt,
-                status: "in_rotation",
-              },
-            ],
-          })),
+            bags: [...state.bags, {
+              id: crypto.randomUUID(), coffeeId: coffee.id,
+              startingWeightG: grams, remainingWeightG: grams,
+              roastedAt, status: "in_rotation",
+            }],
+          };
+          const response = await fetch("/api/journal", {
+            method: "PUT", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ document: next }),
+          });
+          if (!response.ok) throw new Error("Bag could not be saved");
+          setState(next);
+        },
       }}
     >
       {children}
